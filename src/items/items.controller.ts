@@ -1,11 +1,18 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { ItemsService } from './items.service';
+import { Item } from 'src/types/types';
 
 @Controller('items')
 export class ItemsController {
   constructor(private readonly itemservice: ItemsService) {}
 
-  // GET /lists/:id: Retrieve a specific list by ID.
+  // GET /items: Retrieve all items.
+  @Get()
+  async findAll(): Promise<Item[]> {
+    return this.itemservice.findAll();
+  }
+
+  // GET /items/:id: Retrieve a specific list by ID.
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<any> {
     return this.itemservice.findOne(id);

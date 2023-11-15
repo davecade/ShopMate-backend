@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ListDto } from './dto/list.dto';
-import { List } from '../types/types';
+import { Item, List } from '../types/types';
 import { ItemsService } from 'src/items/items.service';
 
 @Injectable()
@@ -29,23 +29,7 @@ export class ListsService {
       throw new NotFoundException(`List #${id} not found`);
     }
 
-    // Fetch the items for the list
-    const listItems = await Promise.all(
-      list.items.map(async (listItem) => {
-        const itemStaticFields = await this.itemsService.findOne(
-          listItem._id.toString(),
-        );
-        return {
-          ...itemStaticFields,
-          isBought: listItem.isBought,
-          quantity: listItem.quantity,
-        };
-      }),
-    );
-    return {
-      ...list,
-      items: listItems,
-    };
+    return list;
   }
 
   async create(createListDto: ListDto): Promise<List> {
@@ -73,5 +57,21 @@ export class ListsService {
       throw new NotFoundException(`List #${id} not found`);
     }
     return deletedList;
+  }
+
+  async addItem(listId: string, newItem: Item): Promise<List> {
+    const list = await this.listModel.findById(listId);
+
+    if (!list) {
+      throw new NotFoundException(`List #${listId} not found`);
+    }
+
+    // Push the new item to the items array and save the list
+    list.items.push(newItem);
+
+    // Save the modified list
+    await list.save();
+
+    return list;
   }
 }
