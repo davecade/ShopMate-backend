@@ -5,12 +5,12 @@ export class ItemDto {
   @IsString()
   name: string;
 
-  @IsNotEmpty()
-  quantity: number;
+  // @IsNotEmpty()
+  // quantity: number;
 
   @IsNotEmpty()
   price: number;
 
-  @IsNotEmpty()
-  isBought: boolean;
+  // @IsNotEmpty()
+  // isBought: boolean;
 }

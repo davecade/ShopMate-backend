@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ItemsService } from './items.service';
 import { Item } from 'src/types/types';
 
@@ -16,5 +16,11 @@ export class ItemsController {
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<any> {
     return this.itemservice.findOne(id);
+  }
+
+  // POST /items: Create a new items.
+  @Post()
+  async addItems(@Body() items: Item[]): Promise<Item[]> {
+    return this.itemservice.addItems(items);
   }
 }

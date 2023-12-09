@@ -17,4 +17,19 @@ export class ItemsService {
     }
     return item;
   }
+
+  async addItems(items: Item[]): Promise<Item[]> {
+    const operations = items.map((item) =>
+      this.itemModel.findOneAndUpdate(
+        { name: item.name }, // Condition to find the item by name
+        item, // New item data
+        {
+          new: true, // Return the updated item data
+          upsert: true, // Create a new item if it doesn't exist
+        },
+      ),
+    );
+
+    return await Promise.all(operations);
+  }
 }

@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { ListsService } from './lists.service';
 import { ListDto } from './dto/list.dto';
-import { Item, List } from 'src/types/types';
+import { List, ListItem } from 'src/types/types';
 
 @Controller('lists')
 export class ListsController {
@@ -37,7 +37,7 @@ export class ListsController {
   @Post(':id/items')
   async addItem(
     @Param('id') listId: string,
-    @Body() newItem: Item, // Make sure this matches the structure of Item in your types
+    @Body() newItem: ListItem, // Make sure this matches the structure of Item in your types
   ): Promise<List> {
     return this.listService.addItem(listId, newItem);
   }

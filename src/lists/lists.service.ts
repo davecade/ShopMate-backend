@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ListDto } from './dto/list.dto';
-import { Item, List } from '../types/types';
+import { List, ListItem } from '../types/types';
 import { ItemsService } from 'src/items/items.service';
 
 @Injectable()
@@ -59,7 +59,7 @@ export class ListsService {
     return deletedList;
   }
 
-  async addItem(listId: string, newItem: Item): Promise<List> {
+  async addItem(listId: string, newItem: ListItem): Promise<List> {
     const list = await this.listModel.findById(listId);
 
     if (!list) {
