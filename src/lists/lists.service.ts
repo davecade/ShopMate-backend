@@ -10,7 +10,6 @@ export class ListsService {
 
   async findAll(): Promise<List[]> {
     try {
-      console.log('ListsService.findAll()');
       return await this.listModel.find().lean().exec();
     } catch (error) {
       console.error('Error fetching lists:', error);
