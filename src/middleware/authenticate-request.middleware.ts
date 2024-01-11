@@ -11,7 +11,7 @@ export class AuthenticateRequestMiddleware implements NestMiddleware {
     const secretKey = req.headers.authorization?.split(' ')[1];
     if (secretKey !== process.env.API_SECRET_KEY) {
       console.log('Unauthorized Request');
-      throw new UnauthorizedException('Invalid secret key');
+      throw new UnauthorizedException('User is not authorized');
     }
     next();
   }
