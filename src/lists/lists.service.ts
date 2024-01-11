@@ -3,14 +3,10 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ListDto } from './dto/list.dto';
 import { List, ListItem } from '../types/types';
-import { ItemsService } from 'src/items/items.service';
 
 @Injectable()
 export class ListsService {
-  constructor(
-    @InjectModel('List') private readonly listModel: Model<List>,
-    private readonly itemsService: ItemsService,
-  ) {}
+  constructor(@InjectModel('List') private readonly listModel: Model<List>) {}
 
   async findAll(): Promise<List[]> {
     try {

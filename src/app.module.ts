@@ -1,10 +1,16 @@
-import { Module } from '@nestjs/common';
+import {
+  Module,
+  NestModule,
+  MiddlewareConsumer,
+  RequestMethod,
+} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ListsModule } from './lists/lists.module';
 import { ItemsModule } from './items/items.module';
 import { ConfigModule } from '@nestjs/config';
+import { AuthenticateRequestMiddleware } from './middleware/authenticate-request.middleware';
 
 @Module({
   imports: [
@@ -18,4 +24,12 @@ import { ConfigModule } from '@nestjs/config';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthenticateRequestMiddleware).forRoutes(
+      { path: '*', method: RequestMethod.ALL }, // Apply to all routes
+      // You can specify individual routes or controllers if needed
+      // e.g., { path: 'lists', method: RequestMethod.GET }
+    );
+  }
+}

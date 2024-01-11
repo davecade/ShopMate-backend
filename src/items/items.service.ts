@@ -19,7 +19,7 @@ export class ItemsService {
   }
 
   async addItems(items: Item[]): Promise<Item[]> {
-    const operations = items.map((item) =>
+    const updatedResult = items.map((item) =>
       this.itemModel.findOneAndUpdate(
         { name: item.name }, // Condition to find the item by name
         item, // New item data
@@ -30,6 +30,6 @@ export class ItemsService {
       ),
     );
 
-    return await Promise.all(operations);
+    return await Promise.all(updatedResult);
   }
 }
