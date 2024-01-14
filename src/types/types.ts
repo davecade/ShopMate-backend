@@ -11,7 +11,7 @@ export type ListItem = {
   name: string;
   quantity: number;
   price: number;
-  isBought: boolean;
+  isChecked: boolean;
 };
 
 export type Item = {

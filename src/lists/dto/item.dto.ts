@@ -12,5 +12,5 @@ export class ItemDto {
   price: number;
 
   @IsNotEmpty()
-  isBought: boolean;
+  isChecked: boolean;
 }
